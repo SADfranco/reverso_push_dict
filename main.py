@@ -8,7 +8,7 @@ import config
 #client = Client("en", "ru")
 #print(list(Client("de", "en").get_translations("braucht")))
 
-#client = Client("en", "ru", credentials=("shabaevandrew@gmail.com", "Aw253634"))
+#client = Client("en", "ru", credentials=(env.USER, env.PASSWORD))
 #result = list(client.get_favorites())
 #for i in result:
 #        new_line = '\n'
@@ -17,7 +17,7 @@ import config
 
 
 def favorword():
-        client = Client("en", "ru", credentials=("shabaevandrew@gmail.com", "Aw253634"))
+        client = Client("en", "ru", credentials=(env.USER, env.PASSWORD))
         result = list(client.get_favorites())
         list_result = []
         new_line = '\n'
@@ -29,7 +29,7 @@ def favorword():
 
 
 #def favorwordruen():
-#      client = Client("ru", "en", credentials=("shabaevandrew@gmail.com", "Aw253634"))
+#      client = Client("ru", "en", credentials=(env.USER, env.PASSWORD))
 #      result = list(client.get_favorites())
 #      list_result = []
 #      for i in result:
