@@ -13,20 +13,30 @@ import datetime
 from multiprocessing import *
 import schedule
 import requests
-
-
-P_TIMEZONE = pytz.timezone(config.TIMEZONE)
-TIMEZONE_COMMON_NAME = config.TIMEZONE_COMMON_NAME
+import test
+import re
 
 bot = telebot.TeleBot(config.TOKEN)
 
 # Функция, которая будет отправлять сообщение
 def send_message():
-    message = main.favorword
-    bot.send_message(config.CHAT_ID, text=message)
+    client = Client("en", "ru", credentials=(config.USER, config.PASSWORD))
+    result = list(client.get_favorites())
+    ran = random.choice(result)
+    source_text = str('@'+ ran['source_text'] + '  ::::::')
+    target_text = str(ran['target_text'])
+    source_context = str(ran['source_context'])
+    remove_context = re.sub('[-,.\-/=!&?-]', '', source_context)
+    target_context = str(ran['target_context'])
+    remove_target = re.sub('[-,.\-/=!&?-]', '', target_context)
+    new_line = '\n'
+    total_source = f"{source_text}  ||{target_text}||{new_line}{remove_context}"
+    total_target = f"||{remove_target}||"
+    bot.send_message(config.CHAT_ID, text = total_source , parse_mode="MarkdownV2")
+    bot.send_message(config.CHAT_ID, text = total_target , parse_mode="MarkdownV2")
 
 # Задаем время отправки сообщения
-schedule.every(60).minutes.do(send_message)
+schedule.every(30).minutes.do(send_message)
 
 # Бесконечный цикл для проверки расписания
 while True:
@@ -37,38 +47,3 @@ while True:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#from telebot import types
-#
-#import telebot;
-#bot = telebot.TeleBot('6166691144:AAFu7ozWXPF1w_iQ7zPsxoaKYXix7P_0jQU');
-#
-#
-#
-#@bot.message_handler(content_types=['text'])
-#def get_text_messages(message):
-#    if message.text == "Привет":
-#        bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
-#
-#bot.polling(none_stop=True, interval=0)
