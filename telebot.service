@@ -1,0 +1,15 @@
+[Unit]
+Description=telebot
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/reverso_context_api/reverso_context_api
+ExecStart=/usr/bin/python3 /home/reverso_context_api/reverso_context_api/telegram.py
+RestartSec=10
+Restart=always
+ 
+[Install]
+WantedBy=multi-user.target
