@@ -24,7 +24,7 @@ from random import sample
 
 bot = telebot.TeleBot(env.TOKEN)
 
-
+# func create dict and sent notification about that
 def reverso():
     client = Client("en", "ru", credentials=(env.USER, env.PASSWORD))
     result = list(client.get_favorites())
@@ -41,11 +41,13 @@ def reverso():
     len_dict = str(len(dict_sum))
     bot.send_message(env.CHAT_ID, text = "Dictonary is created! Amout of words: " + len_dict )
 
+# func pull out dict from file json
 def dictonary_read():
     with open('dictonary.json') as f:
         templates = json.load(f)
     return templates
 
+# func get definition and phonetic
 def defin(x):
     try:
         response = requests.get('https://api.dictionaryapi.dev/api/v2/entries/en/'+ x)
@@ -80,7 +82,7 @@ def defin(x):
 
 
 
-# Функция, которая будет отправлять сообщение
+#finc send message with prepared template
 def send_message():
     result = dictonary_read()
     ran = random.choice(result)
@@ -103,6 +105,7 @@ def send_message():
     bot.send_message(env.CHAT_ID, text = total_source ) #parse_mode="MarkdownV2")
 
 
+#func send last 20 words from dict
 def send_last20():
     list_ten_ = dictonary_read()
     ran = list_ten_[0:19]
@@ -111,6 +114,7 @@ def send_last20():
         string_words += f"{i['source_text']} - {i['target_text']}" + '\n'
     bot.send_message(env.CHAT_ID, text = string_words)
 
+#func send random 20 words from dict
 def send_ran20():
     list_ten_ = dictonary_read()
     ran = sample(list_ten_,20)
@@ -119,14 +123,14 @@ def send_ran20():
         string_words += f"{i['source_text']} - {i['target_text']}" + '\n'
     bot.send_message(env.CHAT_ID, text = string_words)
 
-# Задаем время отправки сообщения
+# schedule sent notification
 #schedule.every(0.05).minutes.do(reverso)
 schedule.every(60).minutes.do(send_message)
 schedule.every().day.at("00:30").do(reverso)
 schedule.every().day.at("10:00").do(send_last20)
 schedule.every().day.at("17:00").do(send_ran20)
 
-# Бесконечный цикл для проверки расписания
+# Cicle for checking schedule
 while True:
     schedule.run_pending()
     time.sleep(1)
