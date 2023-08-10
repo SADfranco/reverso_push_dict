@@ -1,12 +1,12 @@
 
-# push notification in Telegram from favorites list in Recorso Context App
-At first, you create an account in Reverco Context. Then you can add words into your favorites. This bot will send you notifications from favorites list with Russian translation, English definition and transcription (connection with https://api.dictionaryapi.dev). Also you can create your own schedule when bot will send notifications 
-One more function of this bot is sending list of twenty last or random words with Russian translation on schedule.
+# push notification 
+This Telegram bot sends you notifications from your favorites list in the Recorso Context App.
+At first, you create an account in Reverco Context. Then you can add words to your favorites. This bot will send you notifications from favorites list with Russian translation, English definition and transcription (connection with https://api.dictionaryapi.dev). Also you can create your own schedule when bot will send notifications 
+One more function of this bot is sending a list of twenty last or random words with Russian translation on schedule.
 The dictionary is saved in json file automatically every night and send you notification about that.
 
 Example notifications:
-
-
+![alt text](https://github.com/SADfranco/reverso_push_dict/blob/main/notif.jpg?raw=true)
 
 
 
